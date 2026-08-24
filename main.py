@@ -222,7 +222,7 @@ def get_session():
             'x-context-properties': 'eyJsb2NhdGlvbiI6IlVzZXIgUHJvZmlsZSJ9',
             'x-debug-options': 'bugReporterEnabled',
             'x-discord-locale': 'en-US',
-            'x-super-properties': 'eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiRGlzY29yZCBDbGllbnQiLCJyZWxlYXNlX2NoYW5uZWwiOiJjYW5hcnkiLCJjbGllbnRfdmVyc2lvbiI6IjEuMC41OSIsIm9zX3ZlcnNpb24iOiIxMC4wLjIyNjIxIiwib3NfYXJjaCI6Ing2NCIsInN5c3RlbV9sb2NhbGUiOiJlbi1VUyIsImNsaWVudF9idWlsZF9udW1iZXIiOjE4MTk2NywibmF0aXZlX2J1aWxkX251bWJlciI6MzA4NTIsImNsaWVudF9ldmVudF9zb3VyY2UiOm51bGwsImRlc2lnbl9pZCI6MH0='
+            'x-super-properties': 'eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiRGlzY29yZCBDbGllbnQiLCJyZWxlYXNlX2NoYW5uZWwiOiJjYW5hcnkiLCJjbGllbnRfdmVyc2lvbiI6IjEuMC41OSIsIm9zX3ZlcnNpb24iOiIxMC4wLjIyNjIxIiwib3NfYXJjaCIIng2NCIsInN5c3RlbV9sb2NhbGUiOiJlbi1VUyIsImNsaWVudF9idWlsZF9udW1iZXIiOjE4MTk2NywibmF0aXZlX2J1aWxkX251bWJlciI6MzA4NTIsImNsaWVudF9ldmVudF9zb3VyY2UiOm51bGwsImRlc2lnbl9pZCI6MH0='
         })
         if proxy:
             proxy_url = proxy
@@ -863,5 +863,7 @@ if __name__ == '__main__':
                 logging.info(f"Waiting {scan_interval}s before moving to next guild...")
                 time.sleep(scan_interval + random.uniform(0, 10))
 
-        logging.info("Completed a full cycle. Starting over after a short jitter...")
-        time.sleep(random.uniform(5, 30))
+        # ---------- FIX: Respect scan_interval for single‑guild setups ----------
+        logging.info(f"Completed a full cycle. Waiting {scan_interval}s before next cycle...")
+        time.sleep(scan_interval + random.uniform(0, 10))
+        # ---------------------------------------------------------------------
